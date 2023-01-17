@@ -26,12 +26,16 @@ const WeatherInfoPreviewCard = ({
   max,
   day,
 }: WeatherInfoPreviewCardProps) => (
-  <div className="flex flex-col items-center justify-center rounded-lg border-4 p-12">
-    <span className="first-letter:capitalize">{day}</span>
-    <div> Average: {temperatureFormatter.format(average)}</div>
-    <div> median: {temperatureFormatter.format(median)}</div>
-    <div> min: {temperatureFormatter.format(min)}</div>
-    <div> max: {temperatureFormatter.format(max)}</div>
+  <div className="flex flex-col items-center justify-center rounded-lg border-4">
+    <span className="mr-auto py-2 pl-3 text-sm font-semibold first-letter:capitalize">
+      {day}
+    </span>
+    <div className="px-12 pb-12 pt-8 text-sm">
+      <div> Average: {temperatureFormatter.format(average)}</div>
+      <div> median: {temperatureFormatter.format(median)}</div>
+      <div> min: {temperatureFormatter.format(min)}</div>
+      <div> max: {temperatureFormatter.format(max)}</div>
+    </div>
   </div>
 );
 
