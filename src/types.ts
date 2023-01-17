@@ -1,7 +1,11 @@
 import { z } from 'zod';
 
 const WeatherInfoRemoteSchema = z.object({
-  main: z.object({ temp: z.number(), max: z.number(), min: z.number() }),
+  main: z.object({
+    temp: z.number(),
+    temp_max: z.number(),
+    temp_min: z.number(),
+  }),
   dt_txt: z.string(),
 });
 
