@@ -33,9 +33,7 @@ export const getAverageTemp = (temps: Array<WeatherInfo>) =>
   pipe(
     temps,
     A.map((x) => x.main.temp),
-    A.reduce(0, (acc, curr) => acc + curr),
-    (x) => x / temps.length,
-    (x) => Math.round(x * 100) / 100
+    getAveragePrimitiveArray
   );
 
 export const getMedianTemp = (temps: Array<WeatherInfo>) =>
@@ -63,11 +61,16 @@ export const getMaxTemp = (temps: Array<WeatherInfo>) =>
     (x) => x[0]
   );
 
-const getMedianPrimitiveArray = (numbers: Array<number>) => {
+export const getAveragePrimitiveArray = (numbers: Array<number>) => {
+  const average = numbers.reduce((a, b) => a + b, 0) / numbers.length;
+  return Math.round(average * 100) / 100;
+};
+
+export const getMedianPrimitiveArray = (numbers: Array<number>) => {
   const isEvenLength = numbers.length % 2 === 0;
   const middle = Math.floor(numbers.length / 2);
 
-  if (isEvenLength) {
+  if (!isEvenLength) {
     return numbers[middle];
   }
 
