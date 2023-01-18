@@ -1,8 +1,17 @@
 import { pipe } from 'fp-ts/function';
 import * as A from 'fp-ts/Array';
+import * as NEA from 'fp-ts/NonEmptyArray';
 import * as N from 'fp-ts/number';
 
 import { WeatherInfo } from './types';
+
+export const numberFormatter = Intl.NumberFormat('sv', {
+  maximumFractionDigits: 2,
+});
+
+export const groupByDay = NEA.groupBy<WeatherInfo>(
+  (x) => x.dt_txt.split(' ')[0]
+);
 
 export const extractProperty =
   <T>(prop: keyof T) =>
@@ -17,17 +26,6 @@ export const getAverageTemp = (temps: Array<WeatherInfo>) =>
     (x) => x / temps.length,
     (x) => Math.round(x * 100) / 100
   );
-
-const getMedianPrimitiveArray = (numbers: Array<number>) => {
-  const isEvenLength = numbers.length % 2 === 0;
-  const middle = Math.floor(numbers.length / 2);
-
-  if (isEvenLength) {
-    return numbers[middle];
-  }
-
-  return (numbers[middle] + numbers[middle + 1]) / 2;
-};
 
 export const getMedianTemp = (temps: Array<WeatherInfo>) =>
   pipe(
@@ -53,3 +51,14 @@ export const getMaxTemp = (temps: Array<WeatherInfo>) =>
     A.reverse,
     (x) => x[0]
   );
+
+const getMedianPrimitiveArray = (numbers: Array<number>) => {
+  const isEvenLength = numbers.length % 2 === 0;
+  const middle = Math.floor(numbers.length / 2);
+
+  if (isEvenLength) {
+    return numbers[middle];
+  }
+
+  return (numbers[middle] + numbers[middle + 1]) / 2;
+};
