@@ -1,6 +1,6 @@
 import { Header } from './components/header';
 import { WeatherInfoPreview } from './components/weather-info-preview';
-import { useForecast } from './useForecast';
+import { useForecast } from './queries/useForecast';
 
 function App() {
   const { data } = useForecast();

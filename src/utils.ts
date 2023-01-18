@@ -2,12 +2,23 @@ import { pipe } from 'fp-ts/function';
 import * as A from 'fp-ts/Array';
 import * as NEA from 'fp-ts/NonEmptyArray';
 import * as N from 'fp-ts/number';
+import * as R from 'fp-ts/Record';
 
-import { WeatherInfo } from './types';
+import { RemoteForecast, WeatherInfo } from './types';
 
 export const numberFormatter = Intl.NumberFormat('sv', {
   maximumFractionDigits: 2,
 });
+
+export const normalizeForecast = (data: RemoteForecast) =>
+  pipe(
+    data,
+    extractProperty('list'),
+    groupByDay,
+    R.toArray,
+    (x) => x.slice(0, 4),
+    R.fromEntries
+  );
 
 export const groupByDay = NEA.groupBy<WeatherInfo>(
   (x) => x.dt_txt.split(' ')[0]
